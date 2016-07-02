@@ -2,6 +2,11 @@
 
 include_once 'dbtable/Contador.php';
 
+/**
+ * Classe responsavel em fazer todas as regras para o contador
+ * @author Joao Paulo P Villela <joaopaulopvillela@gmail.com>
+ * @version 02/07/2016
+ */
 class Model_Contador {
 
     /**
@@ -13,25 +18,33 @@ class Model_Contador {
         $this->dbTable = new DbTable_Contador();
     }
 
+    /**
+     * Inicia o contador de tempo
+     * @param int $tempo_id
+     * @return boolean se teve sucesso ou erro no start 
+     */
     public function iniciar($tempo_id) {
         return $this->dbTable->iniciar($tempo_id);
     }
 
+    /**
+     * Busca quanto tempo já se passou desde do inicio do contado
+     * @param int $tempo_id Codigo do Tempo
+     * @return int  Tempo já gasto
+     * @throws Exception    Caso o tempo já tenha ultrapassado
+     */
     public function getTempo($tempo_id) {
         $tempo = $this->dbTable->getTempo($tempo_id);
-
 
         $dataAtual = new DateTime();
         $dataInicio = new DateTime($tempo['data_inicio']);
         $dataFim = new DateTime($tempo['data_fim']);
 
-        var_dump(date_diff($dataFim, $dataAtual, true)->format("%R%d"));
-
-        if ($dataFim->diff($dataAtual)->format("%r%s") > 0) {
+        if ($dataFim->getTimestamp() - $dataAtual->getTimestamp() < 0) {
             throw new Exception('Tempo esgotado!');
         }
 
-        return $dataInicio->diff($dataAtual)->format("%S");
+        return $dataAtual->getTimestamp() - $dataInicio->getTimestamp();
     }
 
 }

@@ -1,21 +1,34 @@
 $(function () {
 
-
     var i = null;
 
-    $.ajax({
-        url: "controller/indexController.php?action=iniciar",
-        dataType: 'json',
-        type: 'POST',
-        data: {
-            tempo_id: 1
-        },
-        success: function (result) {
-            i = setInterval(reload, 1000);
-        },
-        error: function (result) {
-        }
-    });
+    $("#iniciar").on('click', iniciar);
+    $("#buscar").on('click', buscar);
+    $("#stop").on('click', stop);
+
+    function buscar() {
+        i = setInterval(reload, 1000);
+    }
+
+    function stop() {
+        clearInterval(i);
+    }
+
+    function iniciar() {
+        $.ajax({
+            url: "controller/indexController.php?action=iniciar",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                tempo_id: 3
+            },
+            success: function (result) {
+                buscar();
+            },
+            error: function (result) {
+            }
+        });
+    }
 
     function reload() {
         $.ajax({
@@ -23,19 +36,20 @@ $(function () {
             dataType: 'json',
             type: 'POST',
             data: {
-                tempo_id: 1
+                tempo_id: 3
             },
             success: function (result) {
-                
+
                 if (result.data.error !== null) {
-                    clearInterval(i);
-                    $("#error").html("<strong>" + result.data.error + "</strong> degrees");
+                    stop();
+                    $("#error").html("<strong>" + result.data.error + "</strong>");
                 } else {
+                    $("#error").html('');
                     $("#texto span").html("<strong>" + result.data.value + "</strong>");
                 }
             },
             error: function (result) {
-                clearInterval(i);
+                stop()
                 $("#error").html("<strong>" + result.statusText + "</strong> degrees");
             }
         });

@@ -8,9 +8,14 @@ class DbTable_Contador {
     private $pdo;
 
     public function __construct() {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=contador', 'root', '');
+        $this->pdo = new PDO('mysql:host=localhost;dbname=contador', 'root', 'root');
     }
 
+    /**
+     * Inicia o tempo 
+     * @param int $tempo_id
+     * @return boolean
+     */
     public function iniciar($tempo_id) {
         
         $query = 'UPDATE tempo SET ';
@@ -21,6 +26,11 @@ class DbTable_Contador {
         
     }
 
+    /**
+     * Busca os dados do tempo desejado
+     * @param int $tempo_id
+     * @return array
+     */
     public function getTempo($tempo_id) {
         return $this->pdo->query("SELECT * FROM tempo WHERE id = {$tempo_id}")->fetch();
     }
