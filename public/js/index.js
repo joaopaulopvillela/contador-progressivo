@@ -2,10 +2,12 @@ $(function () {
 
     var i = null;
 
-    $("#iniciar").on('click', iniciar);
-    $("#buscar").on('click', buscar);
-    $("#stop").on('click', stop);
-
+//    $("#iniciar").on('click', iniciar);
+//    $("#buscar").on('click', buscar);
+//    $("#stop").on('click', stop);
+    
+    iniciar();
+    
     function buscar() {
         i = setInterval(reload, 1000);
     }
