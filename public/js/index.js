@@ -21,9 +21,6 @@ $(function () {
             url: "controller/indexController.php?action=iniciar",
             dataType: 'json',
             type: 'POST',
-            data: {
-                tempo_id: 3
-            },
             success: function (result) {
                 buscar();
             },
@@ -37,9 +34,6 @@ $(function () {
             url: "controller/indexController.php?action=buscar",
             dataType: 'json',
             type: 'POST',
-            data: {
-                tempo_id: 3
-            },
             success: function (result) {
 
                 if (result.data.error !== null) {
