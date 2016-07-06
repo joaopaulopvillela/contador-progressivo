@@ -2,11 +2,11 @@ $(function () {
 
     var i = null;
 
-//    $("#iniciar").on('click', iniciar);
+    $("#iniciar").on('click', iniciar);
 //    $("#buscar").on('click', buscar);
 //    $("#stop").on('click', stop);
     
-    iniciar();
+    buscar();
     
     function buscar() {
         i = setInterval(reload, 1000);
@@ -52,7 +52,7 @@ $(function () {
             },
             error: function (result) {
                 stop()
-                $("#error").html("<strong>" + result.statusText + "</strong> degrees");
+                $("#error").html("<strong>" + result.statusText + "</strong>");
             }
         });
     }

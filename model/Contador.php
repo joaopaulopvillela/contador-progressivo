@@ -43,8 +43,18 @@ class Model_Contador {
         if ($dataFim->getTimestamp() - $dataAtual->getTimestamp() < 0) {
             throw new Exception('Tempo esgotado!');
         }
+        
+        if( empty($tempo['id']) ){
+            throw new Exception('Tempo não localizado');
+        }
 
-        return $dataAtual->getTimestamp() - $dataInicio->getTimestamp();
+        $tempoRestante = $dataAtual->getTimestamp() - $dataInicio->getTimestamp();
+        
+        if( $tempoRestante <= 0 ){
+            throw new Exception('Tempo esgotado!');
+        }
+        
+        return $tempoRestante;
     }
 
 }
